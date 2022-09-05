@@ -2,6 +2,7 @@
 // @name        RoyStream Helper
 // @version     1
 // @match       *://*.roystream.com/*
+// @description The RoyStream Helper
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=roystream.com
 // @supportURL  https://github.com/jerryc05/MyUserscripts
 // @author      jerryc05
