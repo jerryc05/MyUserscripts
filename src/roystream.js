@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoyStream Helper
-// @version     1
+// @version     2
 // @match       *://*.roystream.com/*
 // @description The RoyStream Helper
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=roystream.com
@@ -10,10 +10,14 @@
 // ==/UserScript==
 
 
-setTimeout(() => document.querySelector("#app-content>div>div>div:first-child").classList = [], 0)
-document.querySelector("#app-content>div>div>div.col-md-4")?.remove()
-for (const x of document.querySelectorAll('[class*="d-flex"]:first-child'))
-  x.style.overflow = "hidden"
+const s = document.createElement('style')
+s.append(document.createTextNode(`
+#app-content>div>div>div:first-child{width:auto}
+.row>[class*="d-flex"]:first-child{overflow:hidden}
+#app-content>div>div>div.col-md-4{display:none}
+`))
+document.head.append(s);
+
 new MutationObserver((_, o) => {
   const l = document.querySelectorAll('[class^="list-unstyled ps-3 list-children collapse"]')
   for (const x of l)
