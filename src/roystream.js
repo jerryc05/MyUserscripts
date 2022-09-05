@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoyStream Helper
-// @version     2
+// @version     3
 // @match       *://*.roystream.com/*
 // @description The RoyStream Helper
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=roystream.com
@@ -11,11 +11,11 @@
 
 
 const s = document.createElement('style')
-s.append(document.createTextNode(`
+s.textContent=`
 #app-content>div>div>div:first-child{width:auto}
 .row>[class*="d-flex"]:first-child{overflow:hidden}
 #app-content>div>div>div.col-md-4{display:none}
-`))
+`
 document.head.append(s);
 
 new MutationObserver((_, o) => {
