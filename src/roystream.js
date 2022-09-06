@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoyStream Helper
-// @version     4
+// @version     5
 // @match       *://*.roystream.com/*
 // @description The RoyStream Helper
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=roystream.com
@@ -10,6 +10,13 @@
 // ==/UserScript==
 
 
+new MutationObserver((_, o) => {
+  const l = document.querySelectorAll('[class^="list-unstyled ps-3 list-children collapse"]')
+  for (const x of l)
+    $(x).collapse("show")
+  if (l) o.disconnect()
+}).observe(document.getElementById('app-sidebar'), { childList: true, subtree: true })
+
 const s = document.createElement('style')
 s.textContent=`
 #app-content>div>div>div:first-child{width:100%}
@@ -17,10 +24,3 @@ s.textContent=`
 #app-content>div>div>div.col-md-4{display:none}
 `
 document.head.append(s);
-
-new MutationObserver((_, o) => {
-  const l = document.querySelectorAll('[class^="list-unstyled ps-3 list-children collapse"]')
-  for (const x of l)
-    $(x).collapse("show")
-  if (l) o.disconnect()
-}).observe(document.getElementById('app-sidebar'), { childList: true, subtree: true })
