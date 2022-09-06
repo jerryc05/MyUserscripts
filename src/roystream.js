@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoyStream Helper
-// @version     3
+// @version     4
 // @match       *://*.roystream.com/*
 // @description The RoyStream Helper
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=roystream.com
@@ -12,7 +12,7 @@
 
 const s = document.createElement('style')
 s.textContent=`
-#app-content>div>div>div:first-child{width:auto}
+#app-content>div>div>div:first-child{width:100%}
 .row>[class*="d-flex"]:first-child{overflow:hidden}
 #app-content>div>div>div.col-md-4{display:none}
 `
