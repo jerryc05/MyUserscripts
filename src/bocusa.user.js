@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name        Refresh BOCUSA balance
-// @author      jerryc05
-// @version     3
-// @icon        https://ebanking.bocusa.com/ibank/logo.png
-// @match       *://*/*
-// @run-at      document-body
-// @namespace   https://github.com/jerryc05
-// @downloadURL https://raw.githubusercontent.com/jerryc05/MyUserscripts/master/src/bocusa.user.js
-// @grant       GM_setValue
-// @grant       GM_getValue
-// @grant       GM_xmlhttpRequest
-// @grant       GM_deleteValue
+// @name          Refresh BOCUSA balance
+// @author        jerryc05
+// @version       4
+// @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
+// @match         *://*/*
+// @run-at        document-body
+// @namespace     https://github.com/jerryc05
+// @downloadURL   https://raw.githubusercontent.com/jerryc05/MyUserscripts/master/src/bocusa.user.js
+// @grant         GM_setValue
+// @grant         GM_getValue
+// @grant         GM_xmlhttpRequest
+// @grant         GM_deleteValue
 // ==/UserScript==
 
 ;(async () => {
