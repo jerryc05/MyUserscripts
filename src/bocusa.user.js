@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Refresh BOCUSA balance
 // @author        jerryc05
-// @version       4
+// @version       5
 // @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
 // @match         *://*/*
 // @run-at        document-body
@@ -20,6 +20,7 @@
     ' ',
     '_'
   )
+  const LOADING_STR = 'Loading BOCUSA balance ...'
 
   const elem = document.createElement('code')
   elem.id = GM_VALUE_ID
@@ -45,7 +46,7 @@
   })
 
   while (true) {
-    elem.textContent = 'Loading BOCUSA balance ...'
+    elem.textContent += 'Loading BOCUSA balance ...'
     const resp_str = await new Promise(r =>
       GM_xmlhttpRequest({
         method: 'POST',
@@ -72,7 +73,9 @@
     elem.textContent =
       parseInt(resp_json._code) === 0
         ? resp_json._data?.acctList
-            ?.map(x => `${x.ACC}&#9;${x.BOOK_BAL}`)
+            ?.map(
+              x => `${x.ACC}: $${parseFloat(x.BOOK_BAL.replaceAll(',', ''))}`
+            )
             .join('\n')
         : resp_str
 
