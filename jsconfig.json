@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "NodeNext",
     "target": "ESNext",
     "jsx": "preserve",
     "checkJs": true,
@@ -9,8 +8,5 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true
   },
-  "exclude": [
-    "node_modules",
-    "**/node_modules/*"
-  ]
+  "exclude": ["node_modules", "**/node_modules/*"]
 }
