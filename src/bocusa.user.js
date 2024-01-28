@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Refresh BOCUSA balance
 // @author        jerryc05
-// @version       6
+// @version       7
 // @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
 // @match         *://*/*
 // @run-at        document-body
@@ -46,7 +46,7 @@
   })
 
   while (true) {
-    elem.textContent += 'Loading BOCUSA balance ...'
+    elem.textContent += '\nLoading BOCUSA balance ...'
     const resp_str = await new Promise(r =>
       GM_xmlhttpRequest({
         method: 'POST',
@@ -76,7 +76,7 @@
             ?.map(
               x => `${x.ACC}: $${parseFloat(x.BOOK_BAL.replaceAll(',', ''))}`
             )
-            .join('\n') + '  '
+            .join('\n') +
         : resp_str
 
     await new Promise(r => setTimeout(r, 60_000))
