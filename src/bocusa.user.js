@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name        Refresh BOCUSA balance
 // @author      jerryc05
-// @version     1
+// @version     2
 // @icon        https://ebanking.bocusa.com/ibank/logo.png
 // @match       *://*/*
 // @run-at      document-body
 // @namespace   https://github.com/jerryc05
+// @downloadURL https://github.com/jerryc05/MyUserscripts/raw/master/src/bocusa.user.js
 // @grant       GM_setValue
 // @grant       GM_getValue
 // @grant       GM_xmlhttpRequest
