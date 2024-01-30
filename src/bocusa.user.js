@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name          Refresh BOCUSA balance
 // @author        jerryc05
-// @version       11
+// @version       12
 // @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
 // @match         *://*/*
 // @run-at        document-body
@@ -37,7 +37,6 @@
   elem.style.padding = '.5rem'
   elem.style.fontSize = '.8rem'
   elem.style.lineHeight = '1rem'
-  elem.textContent = LOADING_STR
   document.body.append(elem)
 
   GM_addValueChangeListener(
@@ -67,7 +66,7 @@
     //   } last=${lastRequested} now=${Date.now()}`
     // )
 
-    if (lastRequested + 60_000 /* 1min */ <= Date.now()) {
+    if (!elem.textContent || lastRequested + 60_000 /* 1min */ <= Date.now()) {
       GM_log('Running BOCUSA balance script ...')
 
       // set last requested
