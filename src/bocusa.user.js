@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name          Refresh BOCUSA balance
 // @author        jerryc05
-// @version       13
+// @version       14
 // @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
 // @match         *://*/*
 // @run-at        document-body
@@ -51,7 +51,12 @@
         /** @type any[] */
         const respDatas = respDatasOrNull
         elem.textContent = respDatas
-          .map(x => `${x.ACC}: $${parseFloat(x.BOOK_BAL.replaceAll(',', ''))}`)
+          .map(
+            x =>
+              `BofChina ${x.ACC}: $${parseFloat(
+                x.BOOK_BAL.replaceAll(',', '')
+              )}`
+          )
           .join('\n')
       }
     }
@@ -68,8 +73,6 @@
     // )
 
     if (!elem.textContent || lastRequested + 60_000 /* 1min */ <= Date.now()) {
-      GM_log('Running BOCUSA balance script ...')
-
       // set last requested
       GM.setValue(GM_VALUE_ID_LAST_REQUESTED, Date.now())
 
