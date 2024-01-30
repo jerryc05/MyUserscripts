@@ -8,5 +8,6 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true
   },
+  "include": ["src/**/*", "node_modules/@violentmonkey/types"],
   "exclude": ["node_modules", "**/node_modules/*"]
 }
