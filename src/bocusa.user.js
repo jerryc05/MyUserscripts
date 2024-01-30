@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name          Refresh BOCUSA balance
 // @author        jerryc05
-// @version       12
+// @version       13
 // @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
 // @match         *://*/*
 // @run-at        document-body
@@ -24,7 +24,7 @@
   const GM_VALUE_ID_LAST_REQUESTED = GM_VALUE_ID + ' last requested'
   const GM_VALUE_ID_RESP_STR = GM_VALUE_ID + ' resp_str'
 
-  const LOADING_STR = 'Loading BOCUSA balance ...'
+  const LOADING_STR = ' ...'
 
   const elem = document.createElement('code')
   elem.id = GM_VALUE_ID
@@ -32,11 +32,12 @@
   elem.style.top = '0'
   elem.style.left = '0'
   elem.style.zIndex = '99999999'
+  elem.style.pointerEvents = 'none'
   elem.style.backgroundColor = 'rgba(0,0,0,0.5)'
   elem.style.color = 'white'
-  elem.style.padding = '.5rem'
-  elem.style.fontSize = '.8rem'
-  elem.style.lineHeight = '1rem'
+  elem.style.padding = '8px'
+  elem.style.fontSize = '12px'
+  elem.style.lineHeight = '16px'
   document.body.append(elem)
 
   GM_addValueChangeListener(
@@ -44,7 +45,7 @@
     (_name, _old_value, respDatasOrNull) => {
       // loading
       if (!respDatasOrNull) {
-        elem.textContent += '\n' + LOADING_STR
+        elem.textContent += LOADING_STR
       } // loaded
       else {
         /** @type any[] */
