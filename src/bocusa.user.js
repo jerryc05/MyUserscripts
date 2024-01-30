@@ -3,12 +3,13 @@
 // ==UserScript==
 // @name          Refresh BOCUSA balance
 // @author        jerryc05
-// @version       14
+// @version       15
 // @icon          https://www.bocusa.com/themes/custom/boc/slice/assets/images/favicon.png
 // @match         *://*/*
 // @run-at        document-body
 // @namespace     https://github.com/jerryc05
 // @downloadURL   https://raw.githubusercontent.com/jerryc05/MyUserscripts/master/src/bocusa.user.js
+// @noframes
 // @grant         GM.info
 // @grant         GM_log
 // @grant         GM.setValue
