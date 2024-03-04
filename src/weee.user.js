@@ -4,13 +4,41 @@
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
 // @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      9
+// @version      10
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
 // ==/UserScript==
 
 ;(() => {
+  /**
+   *
+   * @param {(...any)=>void} f
+   * @param {number} delay
+   * @returns
+   */
+  function throttle(f, delay) {
+    let timerFlag = null // Variable to keep track of the timer
+
+    // Returning a throttled version
+    return (/** @type {any} */ ...args) => {
+      if (timerFlag === null) {
+        // If there is no timer currently running
+        f(...args) // Execute the main function
+        timerFlag = setTimeout(() => {
+          // Set a timer to clear the timerFlag after the specified delay
+          timerFlag = null // Clear the timerFlag to allow the main function to be executed again
+        }, delay)
+      }
+    }
+  }
+
+  //
+  //
+  //
+  //
+  //
+
   // show total amount in cart
   const cartTextEl = document.querySelector('[class*="miniCartInHeaderText_"]')
   if (cartTextEl) {
@@ -59,6 +87,28 @@
   //
   //
 
+  const DEFAULT = 'Default'
+  /**
+   *
+   * @param {HTMLSelectElement} s
+   */
+  const onSelect = throttle(s => {
+    console.log('onSelect', s.value)
+    if (s.value === DEFAULT) return
+    const items = document.querySelector('[class*="listContent_"]')
+    if (items) {
+      const children = [...items.children].sort((a, b) => {
+        const [p1, b1] = parsePrice(a)
+        const [p2, b2] = parsePrice(b)
+        if (!b2) return 0
+        if (!b1) return 1
+        return s.value.includes('%')
+          ? (p1 - b1) / p1 - (p2 - b2) / p2
+          : p1 - b1 - (p2 - b2)
+      })
+      for (const x of children) items.appendChild(x)
+    }
+  }, 1000)
   function mainFn() {
     // show discount rate
     for (const headerEl of document.querySelectorAll(
@@ -95,11 +145,14 @@
     // sort by discount rate/amount
     while (window.location.pathname.includes('category/')) {
       const sortElId = 'discount_sort'
-      if (document.getElementById(sortElId)) break
+      let s = document.getElementById(sortElId)
+      if (s instanceof HTMLSelectElement) {
+        onSelect(s)
+        break
+      }
       const h = document.querySelector('[class*="category_resultHeader_"]')
       if (!h) break
-      const DEFAULT = 'Default'
-      const s = document.createElement('select')
+      s = document.createElement('select')
       s.id = sortElId
       for (const x of [DEFAULT, 'Discount %', 'Discount $']) {
         const l = document.createElement('option')
@@ -108,22 +161,7 @@
         if (x === DEFAULT) l.selected = true
         s.append(l)
       }
-      s.onchange = () => {
-        if (s.value === DEFAULT) return
-        const items = document.querySelector('[class*="listContent_"]')
-        if (items) {
-          const children = [...items.children].sort((a, b) => {
-            const [p1, b1] = parsePrice(a)
-            const [p2, b2] = parsePrice(b)
-            if (!b2) return 0
-            if (!b1) return 1
-            return s.value.includes('%')
-              ? (p1 - b1) / p1 - (p2 - b2) / p2
-              : p1 - b1 - (p2 - b2)
-          })
-          for (const x of children) items.appendChild(x)
-        }
-      }
+      if (s instanceof HTMLSelectElement) s.onchange = () => onSelect(s)
       h.insertBefore(s, h.lastChild)
       break
     }
