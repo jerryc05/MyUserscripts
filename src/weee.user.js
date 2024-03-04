@@ -4,7 +4,7 @@
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
 // @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      8
+// @version      9
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
@@ -61,13 +61,13 @@
 
   function mainFn() {
     // show discount rate
-    for (const labelEl of document.querySelectorAll(
-      '[class*="ProductCard_label_"]'
+    for (const headerEl of document.querySelectorAll(
+      '[class*="ProductCard_imgHeader___"]'
     )) {
-      if (!(labelEl instanceof HTMLElement)) continue
+      if (!(headerEl instanceof HTMLElement)) continue
 
       /** @type {HTMLElement|null} */
-      let aEl = labelEl
+      let aEl = headerEl
       for (;;) {
         if (aEl == null || aEl instanceof HTMLAnchorElement) break
         aEl = aEl.parentElement
@@ -75,10 +75,16 @@
       if (aEl) {
         const [p, b] = parsePrice(aEl)
         if (b) {
-          labelEl.textContent = `${parseFloat(
-            (((b - p) / b) * 100).toFixed(2)
-          )}% $${parseFloat((b - p).toFixed(2))}`
-          labelEl.style.fontWeight = 'bold'
+          const labelEl =
+            headerEl.querySelector('[class*="ProductCard_label_"]') ??
+            headerEl.firstElementChild
+          if (labelEl instanceof HTMLElement) {
+            labelEl.textContent = `${parseFloat(
+              (((b - p) / b) * 100).toFixed(2)
+            )}% $${parseFloat((b - p).toFixed(2))}`
+            labelEl.style.fontWeight = 'bold'
+            labelEl.style.backgroundColor = 'red'
+          }
         }
       }
     }
