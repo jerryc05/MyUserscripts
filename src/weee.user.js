@@ -4,7 +4,7 @@
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
 // @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      14
+// @version      15
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
@@ -118,18 +118,11 @@
     )
     if (cartTextEl != null) updCartText(cartTextEl)
 
-    //
-    //
-    //
-    //
-    //
-
     // show discount rate
     for (const headerEl of document.querySelectorAll(
       '[class*="ProductCard_imgHeader___"]'
     )) {
       if (!(headerEl instanceof HTMLElement)) continue
-
       /** @type {HTMLElement|null} */
       let aEl = headerEl
       for (;;) {
