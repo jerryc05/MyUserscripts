@@ -4,7 +4,7 @@
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
 // @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      10
+// @version      11
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
@@ -93,7 +93,6 @@
    * @param {HTMLSelectElement} s
    */
   const onSelect = throttle(s => {
-    console.log('onSelect', s.value)
     if (s.value === DEFAULT) return
     const items = document.querySelector('[class*="listContent_"]')
     if (items) {
