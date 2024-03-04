@@ -3,8 +3,8 @@
 // @author       jerryc05
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
-// @supportURL   https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      7
+// @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
+// @version      8
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
