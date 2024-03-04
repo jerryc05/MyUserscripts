@@ -4,7 +4,7 @@
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
 // @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      12
+// @version      13
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
@@ -45,19 +45,22 @@
   if (cartTextEl != null) {
     function updCartText() {
       GM_log(`${updCartText.name} start!`)
-      fetch('https://api.sayweee.net/ec/so/porder/v3', {
-        headers: {
-          Authorization: `Bearer ${
-            (document.cookie.match(/auth_token=([^;]+)/) || ['', ''])[1]
-          }`,
-        },
-      })
-        .then(x => x.json())
-        .then(x => {
-          const section = x.object.sections[0]
-          if (cartTextEl != null)
-            cartTextEl.textContent = `${section.quantity} 件 $${section.total_price_with_activity}`
-        })
+      if (cartTextEl != null) {
+        const matchedAuthToken = document.cookie.match(/auth_token=([^;]+)/)
+        if (matchedAuthToken != null && matchedAuthToken.length >= 2) {
+          const authToken = matchedAuthToken[1]
+          fetch('https://api.sayweee.net/ec/so/porder/v3', {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+            .then(x => x.json())
+            .then(x => {
+              const section = x.object.sections[0]
+              cartTextEl.textContent = `${section.quantity} 件 $${section.total_price_with_activity}`
+            })
+        }
+      }
     }
     updCartText()
     new MutationObserver(updCartText).observe(cartTextEl, {
