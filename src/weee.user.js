@@ -4,10 +4,11 @@
 // @description  Weee helper
 // @namespace    https://github.com/jerryc05
 // @downloadURL  https://github.com/jerryc05/MyUserscripts/raw/master/src/weee.user.js
-// @version      11
+// @version      12
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
+// @grant        GM_log
 // ==/UserScript==
 
 ;(() => {
@@ -41,8 +42,9 @@
 
   // show total amount in cart
   const cartTextEl = document.querySelector('[class*="miniCartInHeaderText_"]')
-  if (cartTextEl) {
-    const updCartText = () =>
+  if (cartTextEl != null) {
+    function updCartText() {
+      GM_log(`${updCartText.name} start!`)
       fetch('https://api.sayweee.net/ec/so/porder/v3', {
         headers: {
           Authorization: `Bearer ${
@@ -53,8 +55,10 @@
         .then(x => x.json())
         .then(x => {
           const section = x.object.sections[0]
-          cartTextEl.textContent = `${section.quantity} 件 $${section.total_price_with_activity}`
+          if (cartTextEl != null)
+            cartTextEl.textContent = `${section.quantity} 件 $${section.total_price_with_activity}`
         })
+    }
     updCartText()
     new MutationObserver(updCartText).observe(cartTextEl, {
       childList: true,
@@ -92,7 +96,8 @@
    *
    * @param {HTMLSelectElement} s
    */
-  const onSelect = throttle(s => {
+  const onSelect = throttle((s, ...args) => {
+    GM_log(`onSelect start! ${args}`)
     if (s.value === DEFAULT) return
     const items = document.querySelector('[class*="listContent_"]')
     if (items) {
@@ -108,6 +113,7 @@
       for (const x of children) items.appendChild(x)
     }
   }, 1000)
+
   function mainFn() {
     // show discount rate
     for (const headerEl of document.querySelectorAll(
@@ -146,7 +152,7 @@
       const sortElId = 'discount_sort'
       let s = document.getElementById(sortElId)
       if (s instanceof HTMLSelectElement) {
-        onSelect(s)
+        onSelect(s, 0)
         break
       }
       const h = document.querySelector('[class*="category_resultHeader_"]')
@@ -160,7 +166,7 @@
         if (x === DEFAULT) l.selected = true
         s.append(l)
       }
-      if (s instanceof HTMLSelectElement) s.onchange = () => onSelect(s)
+      if (s instanceof HTMLSelectElement) s.onchange = () => onSelect(s, 1)
       h.insertBefore(s, h.lastChild)
       break
     }
